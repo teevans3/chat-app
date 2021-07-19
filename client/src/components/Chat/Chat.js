@@ -27,7 +27,7 @@ const Chat = (props) => {
         if (parseInt(minutes) < 10) {
             minutes = `0${minutes}`
         }
-        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${hours}:${minutes}${meridiem}`;
+        return `${hours}:${minutes}${meridiem} on ${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
     }
 
     return (
@@ -39,7 +39,7 @@ const Chat = (props) => {
                             return (
                                 <MessageDiv>
                                     <SenderInfo display={true} myMessage={msg.userId === props.user.id ? true : false}>
-                                        {msg.username} | {convertDate(msg.time)}
+                                        {msg.username}
                                     </SenderInfo>
                                     {msg.userId === props.user.id ? 
                                         <MyMessage>{msg.text}</MyMessage>
@@ -52,6 +52,7 @@ const Chat = (props) => {
                             <MessageDiv>
                                 {/* dont display sender info in any consecutive messages! (only first) */}
                                 <SenderInfo
+                                    darkMode={props.darkMode}
                                     myMessage={msg.userId === props.user.id ? true : false}
                                     display={
                                         (index !== index.length) &&
@@ -59,11 +60,11 @@ const Chat = (props) => {
                                         ? false : true
                                     }
                                 >
-                                    {msg.username} | {convertDate(msg.time)}
+                                    {msg.username}
                                 </SenderInfo>
                                 {msg.userId === props.user.id ? 
-                                    <MyMessage>{msg.text}</MyMessage>
-                                :   <TheirMessage>{msg.text}</TheirMessage>
+                                    <MyMessage title={`sent at ${convertDate(msg.time)}`}>{msg.text}</MyMessage>
+                                :   <TheirMessage title={`sent at ${convertDate(msg.time)}`}>{msg.text}</TheirMessage>
                                 }
                             </MessageDiv>
                         )
@@ -89,6 +90,11 @@ const ChatContainer = styled.div`
     display: flex;
     flex-direction: column;
     border-radius: 60px;
+
+    @media (max-width: 80rem) {
+        width: 100% !important;
+        height: calc(100% - 8rem);
+    }
 `
 
 
@@ -115,7 +121,7 @@ const MessageDiv = styled.div`
 const SenderInfo = styled.p`
     padding: 0;
     margin: 0;
-    color: gray;
+    color: ${props => props.darkMode ? 'white' : 'gray'};
     font-size: 0.8rem;
     align-self: ${props => props.myMessage ? 'flex-end' : 'flex-start'};
     display: ${props => props.display ? 'flex' : 'none'}

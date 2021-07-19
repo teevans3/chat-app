@@ -23,16 +23,21 @@ const RoomContainer = styled.div`
     height: 4rem;
     box-sizing: border-box;
     border-bottom: ${props => props.darkMode ? '0.01rem solid black' : '0.01rem solid white'};
-    background-color: ${(props) => (
-        (props.darkMode && props.active) ?
-        'black;' :
-        (!props.darkMode && props.active) ?
-        'white;' : 
+    background: ${(props) => (
+        (props.active) ?
+        'linear-gradient(to right, #59C173, #a17fe0, #5D26C1);' :
         'none;'
         )};
-    color: ${props => props.active ? 'gray' : 'gray'};
+    color: ${props => props.active ? 'white' : 'gray'};
     display: flex;
     align-items: center;
     justify-content: center;
 
+    @media (max-width: 80rem) {
+        width: auto;
+        padding: 1rem 2rem;
+        border-bottom: none;
+        margin: 0;
+        border-right: ${props => props.darkMode ? '0.01rem solid black' : '0.01rem solid white'};
+    }
 `

@@ -57,10 +57,10 @@ function App(props) {
       </ModeContainer>
       <AppContainer darkMode={darkMode}>
         {!user ? 
-          <CreateAccount setUser={setUser} />
+          <CreateAccount setUser={setUser} darkMode={darkMode} />
         :
           <>
-            <SplitContainer sizes={[15, 85]} minSize={[140, 800]} gutterSize={4} darkMode={darkMode}>
+            <SplitContainer direction={(window.screen.width > 1280) ? 'horizontal' : 'vertical'} sizes={[15, 85]} minSize={[140, 800]} gutterSize={4} darkMode={darkMode}>
               <Chatrooms
                 darkMode={darkMode}
                 chatrooms={chatrooms}
@@ -98,16 +98,11 @@ const ModeContainer = styled.button`
   left: 4%;
   width: 6rem;
   height: 3rem;
-  background: white;
   border: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: ${(props) => (
-    props.darkMode ?
-    'linear-gradient(to bottom right, white 60%, gray);' :
-    'linear-gradient(to bottom right, black 60%, gray);'
-  )}
+  background-color: ${props => props.darkMode ? 'rgba(152, 255, 204, 1);' : 'rgba(80, 0, 0, 1);'};
   color: ${(props => props.darkMode ? 'black' : 'white')};
   border-radius: 12px;
 
@@ -125,12 +120,18 @@ const AppContainer = styled.div`
   margin: auto;
   position: relative;
   background: ${(props) => (props.darkMode
-    ? 'linear-gradient(to right bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.6));'
-    : 'linear-gradient(to right bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));'
+    ? 'linear-gradient(to right bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.2));'
+    : 'linear-gradient(to right bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.2));'
   )};
   border: ${(props => (props.darkMode ? '0.01rem solid black' : '0.01rem solid white'))};
   backdrop-filter: blur(0.5rem);
   z-index: 1;
+
+  @media(max-width: 80rem) {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+  }
 `
 
 const SplitContainer = styled(Split)`
@@ -143,5 +144,9 @@ const SplitContainer = styled(Split)`
     &:hover {
       cursor: col-resize;
     }
+  }
+
+  @media (max-width: 80rem) {
+    flex-direction: column;
   }
 `

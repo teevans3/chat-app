@@ -19,9 +19,9 @@ const LayoutContainer = styled.div`
     min-height: 100vh;
     display: flex;
     background: ${props => (props.darkMode ?
-        'linear-gradient(to right top, rgba(40, 0, 0, 1), rgba(18, 14, 32, 1));' :
+        'linear-gradient(to right top, rgba(80, 0, 0, 1), rgba(18, 14, 32, 1));' :
         'linear-gradient(to right top, rgba(89, 255, 255, 1), rgba(152, 255, 204, 1));'
-        )};
+    )};
 `
 
 const CircleOne = styled.div`
@@ -37,6 +37,12 @@ const CircleOne = styled.div`
         )};
     border-radius: 50%;
     transition: ease-out 1.5s;
+
+    @media(max-width: 80rem) {
+        height: ${props => (props.darkMode ? '40vw' : '30vw')};
+        width: ${props => (props.darkMode ? '40vw' : '30vw')};
+        transition: none;
+    }
 `
 
 const CircleTwo = styled.div`
@@ -52,5 +58,11 @@ const CircleTwo = styled.div`
         'linear-gradient(to top left, rgba(55, 57, 58, 1), rgba(191, 182, 187, 0.5) 80%)'
     )};
     transition: ease-out 1.5s;
+
+    @media(max-width: 80rem) {
+        height: ${props => (props.darkMode ? '30vw' : '40vw')};
+        width: ${props => (props.darkMode ? '30vw' : '40vw')};
+        transition: none;
+    }
 
 `
