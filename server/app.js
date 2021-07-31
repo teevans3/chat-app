@@ -6,10 +6,10 @@ const server = app.listen(8080);
 const knex = require('knex')({
     client: 'mysql2',
     connection: {
-        host: process.env.MYSQL_HOST,
-        user: process.env.MYSQL_USER,
-        database: process.env.MYSQL_DATABASE,
-        password: process.env.MYSQL_PASSWORD,
+        host: 'localhost',
+        user: 'root',
+        database: 'chat-app',
+        password: 'nodecomplete'
     }
 })
 
@@ -30,6 +30,7 @@ io.on('connection', async socket => {
         let user = null;
         if (data.username) {
             const retrievedUser = await knex.select().table('users').where({ username: data.username }).first();
+
             if (retrievedUser) {
                 user = retrievedUser;
             }
